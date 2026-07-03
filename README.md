@@ -25,12 +25,22 @@ Every score is anchored to observable evidence — files, configs, CI steps — 
 
 ## Install
 
+**Plugin marketplace (recommended)** — inside Claude Code:
+
+```
+/plugin marketplace add rohitguta2432/prodgrade
+/plugin install prodgrade@prodgrade
+```
+
+**Manual copy** — works everywhere:
+
 ```bash
 git clone https://github.com/rohitguta2432/prodgrade.git
 cp -r prodgrade/skills/prodgrade ~/.claude/skills/
 ```
 
-Or per-project: copy `skills/prodgrade` into your repo's `.claude/skills/`.
+Or per-project: copy `skills/prodgrade` into your repo's `.claude/skills/` and
+commit it — everyone who clones your repo gets the auditor.
 
 ## Use
 
@@ -83,9 +93,18 @@ Context matters: an internal tool can responsibly run at pilot-grade. Anything c
 
 ## Why a skill and not a linter?
 
-Readiness isn't a syntax property. Whether `evals/cases.jsonl` is a living golden set or three stale examples requires reading it. Whether your traces capture *decisions* or just status codes requires understanding your code. A skill gets you judgment with receipts — the rubric ([skills/prodgrade/references/rubric.md](skills/prodgrade/references/rubric.md)) keeps that judgment anchored and repeatable.
+Readiness isn't a syntax property. Whether `evals/cases.jsonl` is a living golden set or three stale examples requires reading it. Whether your traces capture *decisions* or just status codes requires understanding your code. A skill gets you judgment with receipts — and the two halves keep that judgment honest:
+
+- **`scripts/scan.py`** — a deterministic, stdlib-only scanner that sweeps every rubric signal (excluding node_modules/.venv noise) and reports hits with `file:line` plus explicit per-pillar *absence* lists. Same repo in, same evidence out, every run.
+- **`references/rubric.md`** — anchored score levels, so the grade is a lookup from evidence, not a mood.
 
 The rubric is the product. If you think a signal is missing or an anchor is wrong — PR it.
+
+## Roadmap
+
+- **Trace-file audits** — accept exported traces (Langfuse/OTel/MLflow) so the behavioral layer (duplicate tool calls, loops, cost per request) becomes verifiable, not just "wire up tracing first".
+- **Calibration fixtures** — small fixture repos with known scores, so rubric changes can be regression-tested.
+- **CI mode** — run the scanner in GitHub Actions and fail PRs that drop a pillar below its floor.
 
 ## License
 

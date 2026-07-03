@@ -1,0 +1,19 @@
+{
+  "name": "prodgrade",
+  "owner": {
+    "name": "Rohit Raj",
+    "url": "https://rohitraj.tech"
+  },
+  "metadata": {
+    "description": "Production-readiness auditing for AI agents",
+    "version": "0.2.0"
+  },
+  "plugins": [
+    {
+      "name": "prodgrade",
+      "source": "./",
+      "description": "Audit any AI agent codebase for production readiness: five-pillar scorecard, evidence-cited gaps, scaffold templates.",
+      "category": "development"
+    }
+  ]
+}

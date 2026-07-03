@@ -16,8 +16,9 @@ report, not a lecture: scorecard → verdict → top 3 gaps → offer to scaffol
 Identify what you're auditing before judging it:
 
 - Find the agent surface: LLM SDK imports (`anthropic`, `openai`, `google.generativeai`,
-  `litellm`, `ollama`), frameworks (`langchain`, `langgraph`, `crewai`, `autogen`,
-  `pydantic_ai`, MCP servers), entry points, tool definitions.
+  `litellm`, `ollama`, Vercel `ai`/`@ai-sdk`), frameworks (`langchain`, `langgraph`,
+  `crewai`, `autogen`, `pydantic_ai`, `llamaindex`, `haystack`, `dspy`,
+  `semantic-kernel`, `smolagents`, MCP servers), entry points, tool definitions.
 - Count agents: single agent vs multi-agent (affects the orchestration pillar).
 - Detect RAG: vector stores, embedding calls, ingestion scripts (affects data foundation).
 - Establish deployment context — it calibrates the bar. Infer from the repo
@@ -33,7 +34,23 @@ and when a pillar is N/A. Scores come from the anchors, never from vibes.
 
 ### 3. Collect evidence
 
-Sweep the repo with the signal patterns from the rubric. Rules:
+Start with the bundled scanner — a deterministic sweep of every rubric signal:
+
+```bash
+python3 <this skill's base directory>/scripts/scan.py /path/to/agent/repo
+```
+
+It excludes vendored dirs (node_modules, .venv, dist…) and returns JSON:
+signal hits with `file:line` excerpts, structural checks (eval dir, CI,
+playbook, container), and an `absent` list per pillar. Two rules for using it:
+
+- **Hits are leads, not verdicts.** Open the flagged files and confirm before
+  scoring — a commented-out import or a keyword in a README scores nothing.
+- **The `absent` list is your negative evidence.** Cite it directly as
+  "scanner found no tracing_lib/spans/llm_io_capture signals".
+
+Then deepen manually where the scanner can't see (quality of eval cases,
+whether traces cover decisions or just calls). Rules:
 
 - **Every scored claim cites evidence** — `file:line` for things present,
   "searched X, Y, Z — nothing found" for things absent.
