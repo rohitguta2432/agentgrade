@@ -1,5 +1,7 @@
 # agentgrade
 
+![License: MIT](https://img.shields.io/badge/license-MIT-green) ![Claude Code skill](https://img.shields.io/badge/Claude%20Code-skill-blueviolet) ![Version](https://img.shields.io/badge/version-0.3.0-blue) ![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
+
 **Production-readiness auditor for AI agents.** Point it at any agent codebase and it grades the repo against five pillars, shows you the gaps ranked by risk, and tells you exactly what to build next.
 
 Most AI agents die in the gap between demo and production. The demo works — controlled inputs, happy path, everyone claps. Then real users arrive and nobody can answer three questions:
@@ -99,6 +101,25 @@ Readiness isn't a syntax property. Whether `evals/cases.jsonl` is a living golde
 - **`references/rubric.md`** — anchored score levels, so the grade is a lookup from evidence, not a mood.
 
 The rubric is the product. If you think a signal is missing or an anchor is wrong — PR it.
+
+## FAQ
+
+**How do I know if my AI agent is production-ready?**
+Run the audit. It checks whether you could answer the five questions above with evidence: golden eval datasets and automated runners, per-decision tracing, a data refresh strategy, failure handling, and governance (PII screening, prompt versioning, audit trails). All applicable pillars at 4/5+ with an incident playbook = production-grade.
+
+**Does it work with LangChain, CrewAI, LlamaIndex, or plain SDK agents?**
+Yes — it's framework-agnostic. Detection covers langchain, langgraph, crewai, autogen, pydantic-ai, llamaindex, haystack, dspy, semantic-kernel, smolagents, the Vercel AI SDK, MCP servers, and raw Anthropic/OpenAI SDK code, in Python and TypeScript.
+
+**Is this another LLM evals framework?**
+No — it's the audit *above* your evals. promptfoo, DeepEval, and Ragas *run* evaluations; agentgrade checks whether your repo *has* them (plus tracing, data freshness, orchestration, governance) and grades the whole system's readiness.
+
+**Does it send my code anywhere?**
+The bundled scanner is a local, stdlib-only Python script. The judgment layer runs in your own Claude Code session — the same place your code already is. Nothing extra leaves your machine.
+
+## Related
+
+- [toast](https://github.com/rohitguta2432/toast) — behavioral diffing for AI-generated PRs; catches logic changes your tests miss. toast checks each change, agentgrade audits the whole system.
+- More agents and tools I build in public: [rohitraj.tech](https://rohitraj.tech/en)
 
 ## Roadmap
 
