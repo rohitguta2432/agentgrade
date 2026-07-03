@@ -1,4 +1,4 @@
-# prodgrade rubric
+# agentgrade rubric
 
 Anchored scoring for the five pillars. Every level names observable evidence —
 if you can't point at a file, a config, or a search that came up empty, you

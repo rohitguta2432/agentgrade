@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""prodgrade evidence scanner — fast, deterministic signal sweep of an agent repo.
+"""agentgrade evidence scanner — fast, deterministic signal sweep of an agent repo.
 
 Outputs JSON of rubric-signal hits grouped by pillar. Hits are LEADS for the
 auditing model to verify by reading the flagged files — never verdicts.

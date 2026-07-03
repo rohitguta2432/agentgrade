@@ -1,8 +1,12 @@
 # Changelog
 
+## 0.3.0 — 2026-07-03
+
+- **Renamed prodgrade → agentgrade.** Repo is now github.com/rohitguta2432/agentgrade (old URLs redirect). Marketplace: `/plugin marketplace add rohitguta2432/agentgrade`. If you installed by manual copy, replace `~/.claude/skills/prodgrade` with `skills/agentgrade`.
+
 ## 0.2.0 — 2026-07-03
 
-- **Plugin marketplace packaging** — install via `/plugin marketplace add rohitguta2432/prodgrade`; manual copy still works.
+- **Plugin marketplace packaging** — install via `/plugin marketplace add rohitguta2432/agentgrade`; manual copy still works.
 - **Bundled evidence scanner** (`scripts/scan.py`, stdlib-only) — deterministic sweep of every rubric signal with `file:line` excerpts, structural checks (eval dir, CI, playbook, container), and per-pillar `absent` lists for citable negative evidence. Excludes vendored dirs (node_modules, .venv, dist…). `--self-test` included.
 - **Wider agent detection** — llamaindex, haystack, dspy, semantic-kernel, smolagents, Vercel AI SDK, MCP servers; TS/JS agents covered alongside Python.
 - Audit procedure updated: scanner first, manual verification of hits before any score ("hits are leads, not verdicts").

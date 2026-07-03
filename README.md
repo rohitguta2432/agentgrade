@@ -1,4 +1,4 @@
-# prodgrade
+# agentgrade
 
 **Production-readiness auditor for AI agents.** Point it at any agent codebase and it grades the repo against five pillars, shows you the gaps ranked by risk, and tells you exactly what to build next.
 
@@ -8,7 +8,7 @@ Most AI agents die in the gap between demo and production. The demo works — co
 2. **What did it actually do?** (no tracing)
 3. **Who owns it when it breaks?** (no governance)
 
-prodgrade is a [Claude Code skill](https://docs.claude.com/en/docs/claude-code/skills) that audits your repo for those answers *before* your users find out you don't have them.
+agentgrade is a [Claude Code skill](https://docs.claude.com/en/docs/claude-code/skills) that audits your repo for those answers *before* your users find out you don't have them.
 
 ## What it checks
 
@@ -28,18 +28,18 @@ Every score is anchored to observable evidence — files, configs, CI steps — 
 **Plugin marketplace (recommended)** — inside Claude Code:
 
 ```
-/plugin marketplace add rohitguta2432/prodgrade
-/plugin install prodgrade@prodgrade
+/plugin marketplace add rohitguta2432/agentgrade
+/plugin install agentgrade@agentgrade
 ```
 
 **Manual copy** — works everywhere:
 
 ```bash
-git clone https://github.com/rohitguta2432/prodgrade.git
-cp -r prodgrade/skills/prodgrade ~/.claude/skills/
+git clone https://github.com/rohitguta2432/agentgrade.git
+cp -r agentgrade/skills/agentgrade ~/.claude/skills/
 ```
 
-Or per-project: copy `skills/prodgrade` into your repo's `.claude/skills/` and
+Or per-project: copy `skills/agentgrade` into your repo's `.claude/skills/` and
 commit it — everyone who clones your repo gets the auditor.
 
 ## Use
@@ -50,10 +50,10 @@ Open Claude Code in the agent repo you want audited and say:
 audit my agent
 ```
 
-or `prodgrade`, or `is this production ready?`. That's it — the skill scopes the agent (framework, single vs multi-agent, RAG or not), infers your deployment context, sweeps for evidence, and emits a report like:
+or `agentgrade`, or `is this production ready?`. That's it — the skill scopes the agent (framework, single vs multi-agent, RAG or not), infers your deployment context, sweeps for evidence, and emits a report like:
 
 ```markdown
-# prodgrade report — support-bot
+# agentgrade report — support-bot
 
 **Context:** customer-facing (inferred: Dockerfile + auth + public API)
 **Verdict:** DEMO-GRADE

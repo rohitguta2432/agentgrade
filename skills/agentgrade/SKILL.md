@@ -1,9 +1,9 @@
 ---
-name: prodgrade
-description: Audit any AI agent codebase for production readiness. Grades the repo against five pillars — evaluation, observability, data foundation, orchestration, governance — plus an incident playbook check, then reports the gaps ranked by risk with the exact artifact to build next. Use when the user says "audit my agent", "prodgrade", "is this agent production ready", "production readiness check", "agent gap analysis", or is about to deploy/launch an AI agent to real users.
+name: agentgrade
+description: Audit any AI agent codebase for production readiness. Grades the repo against five pillars — evaluation, observability, data foundation, orchestration, governance — plus an incident playbook check, then reports the gaps ranked by risk with the exact artifact to build next. Use when the user says "audit my agent", "agentgrade", "is this agent production ready", "production readiness check", "agent gap analysis", or is about to deploy/launch an AI agent to real users.
 ---
 
-# prodgrade — production-readiness auditor for AI agents
+# agentgrade — production-readiness auditor for AI agents
 
 Grade an AI agent codebase against five pillars, cite evidence for every score,
 and hand back a short ranked list of what to build next. The output is a gap
@@ -73,7 +73,7 @@ whether traces cover decisions or just calls). Rules:
 Emit exactly this shape:
 
 ```markdown
-# prodgrade report — <repo-name>
+# agentgrade report — <repo-name>
 
 **Context:** <customer-facing | pilot | internal | demo> (stated/inferred)
 **Verdict:** DEMO-GRADE | PILOT-GRADE | PRODUCTION-GRADE
