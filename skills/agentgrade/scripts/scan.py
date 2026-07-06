@@ -26,7 +26,7 @@ EXCLUDED_FILES = re.compile(r"(package-lock\.json|yarn\.lock|pnpm-lock\.yaml|.*\
 TEXT_EXTS = {
     ".py", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs", ".go", ".rs",
     ".java", ".rb", ".php", ".yaml", ".yml", ".toml", ".json", ".jsonl",
-    ".md", ".txt", ".cfg", ".ini", ".sh", ".env.example",
+    ".md", ".txt", ".cfg", ".ini", ".sh", ".example",  # .example: splitext only sees the last suffix, so ".env.example" would never match
 }
 TEXT_NAMES = {"Makefile", "Dockerfile", "Justfile", "Procfile"}
 MAX_FILE_BYTES = 1_000_000
@@ -36,7 +36,7 @@ MAX_HITS_PER_SIGNAL = 8
 SIGNALS = {
     "scope": {
         "llm_sdk": r"(?:\b|['\"/@])(anthropic|openai|google\.generativeai|google-genai|litellm|ollama|cohere|mistralai|groq|together_?ai|bedrock-runtime|@ai-sdk/|\bai-sdk\b)",
-        "framework": r"(langchain|langgraph|crewai|autogen|pydantic_ai|pydantic-ai|llama_?index|haystack|\bdspy\b|semantic[-_]kernel|smolagents|mastra|openai[-_]agents|agents\s+sdk|fastmcp|mcp\.server|modelcontextprotocol)",
+        "framework": r"(langchain|langgraph|crewai|autogen|pydantic_ai|pydantic-ai|llama_?index|haystack|\bdspy\b|semantic[-_]kernel|smolagents|mastra|openai[-_]agents|agents\s+sdk|fastmcp|mcp\.server|modelcontextprotocol|claude[-_]agent[-_]sdk|google[-_.]adk|strands[-_ ]agents?|\bagno\b|\bletta\b)",
         "multi_agent_hint": r"(crewai|langgraph|autogen|message[-_ ]bus|task[-_ ]queue|celery|rabbitmq|kafka|\borchestrator\b|swarm\b)",
         "deploy_surface": r"(uvicorn|gunicorn|fastapi|flask|express\(\)|next start|Authorization:|\bjwt\b|oauth)",
     },
@@ -67,7 +67,7 @@ SIGNALS = {
         "pii": r"(\bpii\b|redact|scrub|presidio|\bmask(ing)?\b|anonymi[sz]e|moderation|guardrail)",
         "audit_trail": r"(audit[-_ ]?(log|trail|event))",
         "model_config": r"(model[-_ ]?(name|id)\s*[=:]|MODEL\s*[=:])",
-        "injection_defense": r"(prompt[-_ ]?injection|sanitiz|allowlist|whitelist.*tool|tool.*permission)",
+        "injection_defense": r"(prompt[-_ ]?injection|sanitiz|allowlist|whitelist.*tool|tool.*permission|llm[-_ ]?guard|rebuff)",
     },
 }
 
@@ -147,6 +147,10 @@ def self_test():
         os.makedirs(os.path.join(tmp, "evals"))
         with open(os.path.join(tmp, "agent.py"), "w") as f:
             f.write("import langfuse\nfrom anthropic import Anthropic\nMAX_RETRIES = 3\n")
+        with open(os.path.join(tmp, ".env.example"), "w") as f:
+            f.write("ANTHROPIC_MODEL=claude-fable-5\n")
+        with open(os.path.join(tmp, "graph.py"), "w") as f:
+            f.write("from claude_agent_sdk import query\n")
         with open(os.path.join(tmp, "evals", "cases.jsonl"), "w") as f:
             f.write('{"input": "hi", "expected_output": "hello"}\n')
         os.makedirs(os.path.join(tmp, "node_modules", "junk"))
@@ -159,6 +163,8 @@ def self_test():
         assert "retry_fallback" in r["signals"]["observability"], "max_retries not detected"
         assert r["structure"]["eval_dir"] == ["evals"], "evals/ dir not detected"
         assert r["structure"]["playbook"] is None, "playbook false positive"
+        assert "framework" in r["signals"]["scope"], "claude_agent_sdk not detected"
+        assert "model_config" in r["signals"]["governance"], ".env.example not scanned"
     print("self-test OK")
 
 

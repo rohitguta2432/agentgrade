@@ -18,7 +18,8 @@ Identify what you're auditing before judging it:
 - Find the agent surface: LLM SDK imports (`anthropic`, `openai`, `google.generativeai`,
   `litellm`, `ollama`, Vercel `ai`/`@ai-sdk`), frameworks (`langchain`, `langgraph`,
   `crewai`, `autogen`, `pydantic_ai`, `llamaindex`, `haystack`, `dspy`,
-  `semantic-kernel`, `smolagents`, MCP servers), entry points, tool definitions.
+  `semantic-kernel`, `smolagents`, `claude-agent-sdk`, `openai-agents`,
+  Google ADK, Strands, `agno`, `letta`, MCP servers), entry points, tool definitions.
 - Count agents: single agent vs multi-agent (affects the orchestration pillar).
 - Detect RAG: vector stores, embedding calls, ingestion scripts (affects data foundation).
 - Establish deployment context — it calibrates the bar. Infer from the repo

@@ -1,7 +1,7 @@
 {
   "name": "agentgrade",
   "description": "Production-readiness auditor for AI agents — grades any agent repo against five pillars (evaluation, observability, data foundation, orchestration, governance) and reports ranked gaps with the exact artifact to build next.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": {
     "name": "Rohit Raj",
     "url": "https://rohitraj.tech"
